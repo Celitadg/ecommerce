@@ -13,7 +13,12 @@ class Contenedor {
     init(){
         const archivo = fs.readFileSync(this.archivo)
         Contenedor.lista = JSON.parse(archivo)
-        Contenedor.countId = Contenedor.lista.length
+        //Contenedor.countId = Contenedor.lista.length
+        let max = 0
+        Contenedor.lista.forEach((element) => {
+            if (element.id > max) max = element.id
+        })
+        Contenedor.countId = max
         console.log(Contenedor.countId)
 
     }
@@ -26,7 +31,6 @@ class Contenedor {
             let string = JSON.stringify(Contenedor.lista)
             fs.writeFileSync(this.archivo, string)
             console.log(object.id)
-            //return object.id
             return object
         }
         catch{
@@ -42,7 +46,7 @@ class Contenedor {
             const resultado = elemento
             return resultado
         } else {
-            const resultado = null
+            const resultado = {error:'producto no encontrado'}
             return resultado
         }   
     }
